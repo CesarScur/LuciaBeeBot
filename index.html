@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virtual BeeBot 🐝</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header>
+  <div class="header-title">
+    <span class="header-bee">🐝</span>
+    Virtual BeeBot
+  </div>
+  <div class="header-controls">
+    <button class="header-btn" id="btn-high-contrast" aria-pressed="false" title="Modo alto contraste">👁 Contraste</button>
+    <button class="header-btn active" id="btn-sound" aria-pressed="true" title="Sons">🔊 Sons</button>
+  </div>
+</header>
+
+<!-- ═══ TABS ═══ -->
+<nav class="tabs" role="tablist" aria-label="Modos do BeeBot">
+  <button class="tab active" role="tab" aria-selected="true" data-view="free" id="tab-free">🕹 Livre</button>
+  <button class="tab" role="tab" aria-selected="false" data-view="challenge" id="tab-challenge">🏆 Desafios</button>
+  <button class="tab" role="tab" aria-selected="false" data-view="editor" id="tab-editor">✏️ Editor</button>
+</nav>
+
+<!-- ═══ APP ═══ -->
+<div class="app-content">
+
+  <!-- ─── FREE PLAY VIEW ─── -->
+  <div id="view-free" class="view active" role="tabpanel" aria-labelledby="tab-free">
+    <div class="main-layout">
+      <!-- Grid Section -->
+      <div class="grid-section">
+        <div class="grid-wrapper" aria-label="Tabuleiro 8x8 da BeeBot">
+          <div class="grid" id="grid-free" role="grid" aria-label="Grid de movimento"></div>
+        </div>
+        <!-- Replay bar -->
+        <div class="replay-bar" id="replay-bar-free">
+          <span style="font-size:0.85rem;font-weight:700;color:#555;">🔁 Replay</span>
+          <button class="replay-btn" id="btn-replay-restart">⏮ Reiniciar</button>
+          <button class="replay-btn" id="btn-replay-step">⏭ Passo</button>
+          <button class="replay-btn" id="btn-replay-play">▶ Reproduzir</button>
+          <span class="replay-step-info" id="replay-step-info">Passo 0/0</span>
+        </div>
+        <!-- Status -->
+        <div class="status-bar" id="status-free" role="status" aria-live="polite">
+          <span class="status-icon">🐝</span>
+          <span class="status-text">Adicione comandos e pressione ▶ Executar!</span>
+        </div>
+      </div>
+
+      <!-- Right Panel -->
+      <div class="right-panel">
+        <!-- Controls -->
+        <div class="panel" aria-label="Painel de comandos">
+          <div class="panel-title">🎮 Comandos</div>
+          <div class="btn-grid">
+            <div></div>
+            <button class="cmd-btn forward" data-cmd="FORWARD" aria-label="Avançar" title="Avançar (W)">⬆<span class="label">Avançar</span></button>
+            <div></div>
+            <button class="cmd-btn left" data-cmd="LEFT" aria-label="Virar à esquerda" title="Esquerda (A)">↺<span class="label">Esquerda</span></button>
+            <button class="cmd-btn pause" data-cmd="PAUSE" aria-label="Pausar" title="Pausar (Space)">⏸<span class="label">Pausa</span></button>
+            <button class="cmd-btn right" data-cmd="RIGHT" aria-label="Virar à direita" title="Direita (D)">↻<span class="label">Direita</span></button>
+            <div></div>
+            <button class="cmd-btn backward" data-cmd="BACKWARD" aria-label="Voltar" title="Voltar (S)">⬇<span class="label">Voltar</span></button>
+            <div></div>
+            <button class="cmd-btn clear" id="btn-clear-free" aria-label="Limpar programa" title="Limpar (Escape)">🗑<span class="label">Limpar</span></button>
+            <button class="cmd-btn run" id="btn-run-free" aria-label="Executar programa" title="Executar (Enter)">▶ Executar!</button>
+          </div>
+          <!-- Speed -->
+          <div class="speed-row" role="group" aria-label="Velocidade de execução">
+            <span class="speed-label">⚡ Vel:</span>
+            <button class="speed-btn" data-speed="slow">🐢 Lento</button>
+            <button class="speed-btn active" data-speed="normal">🐝 Normal</button>
+            <button class="speed-btn" data-speed="fast">🚀 Rápido</button>
+          </div>
+        </div>
+
+        <!-- Command Queue -->
+        <div class="panel">
+          <div class="panel-title">📋 Programa</div>
+          <div class="queue-area" id="queue-free" role="list" aria-label="Lista de comandos"></div>
+          <div class="queue-count" id="queue-count-free" aria-live="polite">0 / 200 comandos</div>
+          <div class="io-row">
+            <button class="io-btn" id="btn-export-free" aria-label="Exportar programa como JSON">📤 Exportar</button>
+            <button class="io-btn" id="btn-import-free" aria-label="Importar programa de JSON">📥 Importar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── CHALLENGE VIEW ─── -->
+  <div id="view-challenge" class="view" role="tabpanel" aria-labelledby="tab-challenge">
+
+    <!-- Level Picker -->
+    <div id="challenge-level-picker" class="challenge-picker">
+      <div class="challenge-picker-hero">
+        <h2>🏆 Desafios</h2>
+        <p>Escolha uma fase e programe a BeeBot até o objetivo!</p>
+        <div class="challenge-picker-stats">
+          <span class="picker-stat" id="picker-total-levels">📋 5 fases</span>
+          <span class="picker-stat done" id="picker-completed">✅ 0 completas</span>
+          <span class="picker-stat" id="picker-stars-total">⭐ 0 estrelas</span>
+        </div>
+      </div>
+      <div id="challenge-level-list" class="level-list" role="list" aria-label="Lista de fases"></div>
+    </div>
+
+    <!-- Game -->
+    <div id="challenge-game" class="main-layout">
+      <div class="grid-section">
+        <div class="grid-wrapper">
+          <div class="grid" id="grid-challenge" role="grid" aria-label="Grid de desafio"></div>
+        </div>
+        <div class="status-bar" id="status-challenge" role="status" aria-live="polite">
+          <span class="status-icon">🎯</span>
+          <span class="status-text">Leve a BeeBot até o objetivo!</span>
+        </div>
+      </div>
+      <div class="right-panel">
+        <!-- Challenge Info -->
+        <div class="panel">
+          <button class="btn-back-phases" id="btn-back-phases" aria-label="Voltar à lista de fases">← Fases</button>
+          <div class="challenge-header">
+            <div class="panel-title" style="margin:0">🏆 Desafio</div>
+            <span class="level-badge" id="challenge-level-badge">Fase 1</span>
+          </div>
+          <div id="challenge-level-name" style="font-family:var(--font-display);font-size:0.95rem;margin-bottom:8px;color:#555;"></div>
+          <div class="challenge-desc" id="challenge-desc">Leve a BeeBot até a flor! 🌸</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+            <span class="stars" id="challenge-stars">⭐⭐⭐</span>
+            <span style="font-size:0.8rem;font-weight:700;color:#9E9E9E;" id="challenge-progress">0/5 completos</span>
+          </div>
+          <div class="challenge-nav">
+            <button class="nav-btn" id="btn-prev-level" disabled>◀ Anterior</button>
+            <button class="nav-btn" id="btn-next-level">Próximo ▶</button>
+          </div>
+        </div>
+        <!-- Controls (same as free) -->
+        <div class="panel">
+          <div class="panel-title">🎮 Comandos</div>
+          <div class="btn-grid" id="challenge-btns">
+            <div></div>
+            <button class="cmd-btn forward" data-cmd="FORWARD" data-mode="challenge" aria-label="Avançar">⬆<span class="label">Avançar</span></button>
+            <div></div>
+            <button class="cmd-btn left" data-cmd="LEFT" data-mode="challenge" aria-label="Esquerda">↺<span class="label">Esquerda</span></button>
+            <button class="cmd-btn pause" data-cmd="PAUSE" data-mode="challenge" aria-label="Pausa">⏸<span class="label">Pausa</span></button>
+            <button class="cmd-btn right" data-cmd="RIGHT" data-mode="challenge" aria-label="Direita">↻<span class="label">Direita</span></button>
+            <div></div>
+            <button class="cmd-btn backward" data-cmd="BACKWARD" data-mode="challenge" aria-label="Voltar">⬇<span class="label">Voltar</span></button>
+            <div></div>
+            <button class="cmd-btn clear" id="btn-clear-challenge">🗑<span class="label">Limpar</span></button>
+            <button class="cmd-btn run" id="btn-run-challenge">▶ Executar!</button>
+          </div>
+          <div class="speed-row" role="group" aria-label="Velocidade">
+            <span class="speed-label">⚡ Vel:</span>
+            <button class="speed-btn" data-speed="slow">🐢</button>
+            <button class="speed-btn active" data-speed="normal">🐝</button>
+            <button class="speed-btn" data-speed="fast">🚀</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">📋 Programa</div>
+          <div class="queue-area" id="queue-challenge" role="list" aria-label="Lista de comandos do desafio"></div>
+          <div class="queue-count" id="queue-count-challenge">0 / 200 comandos</div>
+        </div>
+      </div>
+    </div><!-- /#challenge-game -->
+  </div>
+
+  <!-- ─── EDITOR VIEW ─── -->
+  <div id="view-editor" class="view" role="tabpanel" aria-labelledby="tab-editor">
+    <div class="editor-toolbar" role="toolbar" aria-label="Ferramentas do editor">
+      <button class="tool-btn active" id="tool-start" aria-pressed="true">🐝 Início</button>
+      <button class="tool-btn tool-flower" id="tool-flower" aria-pressed="false">🌸 Flor</button>
+      <button class="tool-btn tool-obstacle" id="tool-obstacle" aria-pressed="false">🧱 Obstáculo</button>
+      <button class="tool-btn tool-erase" id="tool-erase" aria-pressed="false">🧹 Apagar</button>
+      <button class="tool-btn" id="tool-target" aria-pressed="false">🎯 Alvo</button>
+    </div>
+    <div class="main-layout">
+      <div class="grid-section">
+        <div class="grid-wrapper">
+          <div class="grid editor-grid" id="grid-editor" role="grid" aria-label="Grid do editor de fases"></div>
+        </div>
+        <div class="editor-actions">
+          <button class="editor-action-btn ea-clear" id="btn-editor-clear">🗑 Limpar Tudo</button>
+          <button class="editor-action-btn ea-save" id="btn-editor-save">💾 Salvar Fase</button>
+          <button class="editor-action-btn ea-play" id="btn-editor-play">▶ Testar Fase</button>
+        </div>
+      </div>
+      <div class="right-panel">
+        <div class="panel">
+          <div class="panel-title">✏️ Editor de Fases</div>
+          <p style="font-size:0.85rem;color:#757575;font-weight:600;line-height:1.6;margin-bottom:14px;">
+            Clique nas células para colocar objetos.<br>
+            🐝 = Posição inicial da abelha<br>
+            🌸 = Flor (coletável)<br>
+            🧱 = Obstáculo (bloqueador)<br>
+            🎯 = Objetivo (destino)<br>
+            🧹 = Apagar célula
+          </p>
+          <div style="margin-bottom:12px;">
+            <label style="font-size:0.85rem;font-weight:700;display:block;margin-bottom:6px;">Nome da fase:</label>
+            <input type="text" id="editor-level-name" placeholder="Ex: Minha Fase Incrível" style="width:100%;padding:8px 12px;border:2px solid #E0E0E0;border-radius:8px;font-family:var(--font-body);font-size:0.9rem;">
+          </div>
+          <div style="margin-bottom:12px;">
+            <label style="font-size:0.85rem;font-weight:700;display:block;margin-bottom:6px;">Descrição:</label>
+            <input type="text" id="editor-level-desc" placeholder="Ex: Leve a BeeBot até a flor!" style="width:100%;padding:8px 12px;border:2px solid #E0E0E0;border-radius:8px;font-family:var(--font-body);font-size:0.9rem;">
+          </div>
+          <div id="editor-saved-levels">
+            <div class="panel-title" style="font-size:1rem;margin-top:12px;">📁 Fases Salvas</div>
+            <div id="saved-levels-list" style="display:flex;flex-direction:column;gap:6px;margin-top:8px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end app-content -->
+
+<!-- ═══ MODAL ═══ -->
+<div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal">
+    <div class="modal-emoji" id="modal-emoji">🎉</div>
+    <div class="modal-title" id="modal-title">Parabéns!</div>
+    <div class="modal-text" id="modal-text">Você completou o desafio!</div>
+    <div class="modal-btns" id="modal-btns"></div>
+  </div>
+</div>
+
+<!-- ═══ IO MODAL ═══ -->
+<div class="modal-overlay" id="io-modal" role="dialog" aria-modal="true" aria-labelledby="io-modal-title">
+  <div class="modal">
+    <div class="modal-title" id="io-modal-title">Exportar Programa</div>
+    <textarea class="io-textarea" id="io-textarea" aria-label="JSON do programa"></textarea>
+    <div class="modal-btns">
+      <button class="modal-btn mbtn-primary" id="io-confirm-btn">✅ Confirmar</button>
+      <button class="modal-btn mbtn-secondary" id="io-cancel-btn">❌ Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CONFETTI ═══ -->
+<div class="confetti-container" id="confetti-container" aria-hidden="true"></div>
+
+<!-- ═══ SCRIPTS (load order matters — globals, no bundler) ═══ -->
+<script src="js/bee/constants.js"></script>
+<script src="js/data/levels.js"></script>
+<script src="js/audio-manager.js"></script>
+<script src="js/grid.js"></script>
+<script src="js/bee/svg.js"></script>
+<script src="js/bee/state.js"></script>
+<script src="js/command-queue.js"></script>
+<script src="js/renderer.js"></script>
+<script src="js/executor.js"></script>
+<script src="js/ui/status.js"></script>
+<script src="js/modal.js"></script>
+<script src="js/app.js"></script>
+<script src="js/storage/custom-levels.js"></script>
+<script src="js/challenge.js"></script>
+<script src="js/freeplay.js"></script>
+<script src="js/editor.js"></script>
+<script src="js/ui/layout.js"></script>
+</body>
+</html>
