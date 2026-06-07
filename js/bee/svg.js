@@ -4,8 +4,6 @@
 function createBeeSVG() {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('viewBox', '0 0 56 56');
-    svg.setAttribute('width', '52');
-    svg.setAttribute('height', '52');
     svg.setAttribute('aria-hidden', 'true');
     svg.innerHTML = `
     <!-- Wings -->

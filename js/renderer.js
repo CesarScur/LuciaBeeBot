@@ -31,18 +31,10 @@ function createRenderer(gridEl, queueEl, countEl) {
         gridEl.appendChild(beeEl);
     }
 
-    function getCellSize() {
-        const cell = gridEl.querySelector('.cell');
-        if (cell) return cell.offsetWidth;
-        const raw = getComputedStyle(document.documentElement).getPropertyValue('--cell-size');
-        return parseFloat(raw) || 72;
-    }
-
     function placeBee(state) {
         if (!beeEl) init();
-        const cellSize = getCellSize();
-        beeEl.style.left = (state.x * cellSize) + 'px';
-        beeEl.style.top = (state.y * cellSize) + 'px';
+        beeEl.style.setProperty('--bee-x', state.x);
+        beeEl.style.setProperty('--bee-y', state.y);
         beeWrap.style.transform = `rotate(${DIR_ROTATION[state.dir]}deg)`;
     }
 
