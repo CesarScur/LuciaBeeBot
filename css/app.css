@@ -849,6 +849,15 @@ button:focus-visible {
         width: 100%;
         max-width: 100%;
     }
+    body.executing header {
+        display: none;
+    }
+    body.executing .grid-section {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: var(--bg);
+    }
 
     .panel { padding: 12px; }
 
