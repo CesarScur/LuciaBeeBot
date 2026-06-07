@@ -111,16 +111,16 @@ header {
 
 .main-layout {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr;
     gap: 20px;
     align-items: start;
     justify-content: center;
 }
 @media (max-width: 900px) {
-    .main-layout { grid-template-columns: 1fr; }
-    .right-panel { width: 100%; max-width: 100%; margin: 0 auto; }
     :root { --cell-size: min(52px, calc((100vw - 80px) / var(--grid-size))); }
-    #view-challenge .main-layout { grid-template-columns: 1fr; }
+}
+@media (min-width: 901px) {
+    .main-layout { grid-template-columns: auto auto; }
 }
 @media (max-width: 480px) {
     :root { --cell-size: min(44px, calc((100vw - 48px) / var(--grid-size))); }
@@ -250,8 +250,14 @@ header {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    width: 260px;
-    flex-shrink: 0;
+    width: 100%;
+    max-width: 100%;
+}
+@media (min-width: 901px) {
+    .right-panel {
+        width: 260px;
+        flex-shrink: 0;
+    }
 }
 
 /* ───── CONTROL PANEL ───── */
@@ -474,10 +480,6 @@ header {
 .nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
 /* ───── CHALLENGE VIEW ───── */
-@media (min-width: 901px) {
-    #view-challenge .main-layout { grid-template-columns: auto auto; }
-}
-
 .challenge-picker {
     max-width: 900px;
     margin: 0 auto;
