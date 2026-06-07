@@ -276,5 +276,10 @@
     const origAdd = queue.add.bind(queue);
     // Observe changes via setInterval (simple approach)
     setInterval(saveProgress, 2000);
+
+    document.addEventListener('beebot:resize', () => {
+        if (!document.getElementById('view-free').classList.contains('active')) return;
+        renderer.placeBee(beeState);
+    });
 })();
 

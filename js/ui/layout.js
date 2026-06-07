@@ -60,3 +60,14 @@ try {
 document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeModal();
 });
+
+/* ============================================================
+   RESIZE — keep bee aligned after orientation / viewport change
+   ============================================================ */
+let resizeTimer;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+        document.dispatchEvent(new CustomEvent('beebot:resize'));
+    }, 150);
+});

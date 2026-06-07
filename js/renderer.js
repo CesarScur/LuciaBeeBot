@@ -21,9 +21,16 @@ function createRenderer(gridEl, queueEl, countEl) {
         gridEl.appendChild(beeEl);
     }
 
+    function getCellSize() {
+        const cell = gridEl.querySelector('.cell');
+        if (cell) return cell.offsetWidth;
+        const raw = getComputedStyle(document.documentElement).getPropertyValue('--cell-size');
+        return parseFloat(raw) || 72;
+    }
+
     function placeBee(state) {
         if (!beeEl) init();
-        const cellSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cell-size'));
+        const cellSize = getCellSize();
         beeEl.style.left = (state.x * cellSize) + 'px';
         beeEl.style.top = (state.y * cellSize) + 'px';
         beeWrap.style.transform = `rotate(${DIR_ROTATION[state.dir]}deg)`;
@@ -69,7 +76,6 @@ function createRenderer(gridEl, queueEl, countEl) {
                     const it = document.createElement('div');
                     it.className = 'grid-item';
                     it.textContent = '🧱';
-                    it.style.fontSize = '1.4rem';
                     c.appendChild(it);
                 }
             }
@@ -84,7 +90,6 @@ function createRenderer(gridEl, queueEl, countEl) {
                 const it = document.createElement('div');
                 it.className = 'grid-item target-item';
                 it.textContent = '🌸';
-                it.style.fontSize = '1.6rem';
                 c.appendChild(it);
             }
         }
@@ -98,7 +103,6 @@ function createRenderer(gridEl, queueEl, countEl) {
                 const it = document.createElement('div');
                 it.className = 'grid-item';
                 it.textContent = '🌼';
-                it.style.fontSize = '1.4rem';
                 it.dataset.fx = f.x;
                 it.dataset.fy = f.y;
                 c.appendChild(it);

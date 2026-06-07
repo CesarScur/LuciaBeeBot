@@ -118,8 +118,12 @@ header {
 }
 @media (max-width: 900px) {
     .main-layout { grid-template-columns: 1fr; }
-    .right-panel { width: 100%; max-width: 320px; margin: 0 auto; }
-    :root { --cell-size: 52px; }
+    .right-panel { width: 100%; max-width: 100%; margin: 0 auto; }
+    :root { --cell-size: min(52px, calc((100vw - 80px) / var(--grid-size))); }
+    #view-challenge .main-layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+    :root { --cell-size: min(44px, calc((100vw - 48px) / var(--grid-size))); }
 }
 
 /* ───── GRID ───── */
@@ -200,7 +204,7 @@ header {
     align-items: center;
     justify-content: center;
     pointer-events: none;
-    font-size: 1.6rem;
+    font-size: calc(var(--cell-size) * 0.38);
     width: var(--cell-size);
     height: var(--cell-size);
     transition: all 0.3s ease;
@@ -227,8 +231,8 @@ header {
 .bee-svg-wrap {
     transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
     transform-origin: center;
-    width: 56px;
-    height: 56px;
+    width: calc(var(--cell-size) * 0.78);
+    height: calc(var(--cell-size) * 0.78);
 }
 .bee-container.bounce { animation: bee-bounce 0.3s ease; }
 @keyframes bee-bounce { 0%,100% { transform: scale(1); } 50% { transform: scale(1.18); } }
@@ -470,7 +474,9 @@ header {
 .nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
 /* ───── CHALLENGE VIEW ───── */
-#view-challenge .main-layout { grid-template-columns: auto auto; }
+@media (min-width: 901px) {
+    #view-challenge .main-layout { grid-template-columns: auto auto; }
+}
 
 .challenge-picker {
     max-width: 900px;
@@ -799,4 +805,165 @@ button:focus-visible {
     font-size: 0.85rem;
     resize: none;
     margin-bottom: 10px;
+}
+
+/* ───── MOBILE OPTIMIZATIONS ───── */
+@media (max-width: 600px) {
+    header {
+        padding: 8px 12px;
+        padding-top: max(8px, env(safe-area-inset-top));
+    }
+    .header-title {
+        font-size: 1.2rem;
+        gap: 6px;
+    }
+    .header-bee { font-size: 1.4rem; }
+    .header-controls { gap: 6px; }
+    .header-btn {
+        padding: 8px 10px;
+        font-size: 0.72rem;
+        min-height: 36px;
+    }
+
+    .tabs {
+        padding: 6px 8px 0;
+        gap: 2px;
+    }
+    .tab {
+        flex: 1;
+        padding: 10px 6px;
+        font-size: 0.78rem;
+        min-height: 44px;
+    }
+
+    .app-content {
+        padding: 10px 10px max(20px, env(safe-area-inset-bottom));
+    }
+
+    .grid-wrapper {
+        padding: 6px;
+        border-width: 2px;
+        max-width: 100%;
+    }
+    .grid-section {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .panel { padding: 12px; }
+
+    .cmd-btn {
+        font-size: 1.15rem;
+        border-radius: 8px;
+        min-height: 44px;
+    }
+    .cmd-btn span.label { font-size: 0.55rem; }
+    .cmd-btn.run { font-size: 1rem; min-height: 44px; }
+
+    .speed-row { flex-wrap: wrap; }
+    .speed-btn {
+        min-height: 40px;
+        font-size: 0.7rem;
+    }
+
+    .status-bar {
+        padding: 10px 12px;
+        min-height: 48px;
+        width: 100%;
+    }
+    .status-icon { font-size: 1.2rem; }
+    .status-text { font-size: 0.85rem; }
+
+    .queue-area { max-height: 140px; }
+    .q-cmd {
+        padding: 6px 10px;
+        font-size: 0.7rem;
+        min-height: 32px;
+    }
+    .q-cmd-remove {
+        width: 22px;
+        height: 22px;
+        font-size: 0.7rem;
+    }
+
+    .replay-bar.visible {
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        gap: 6px;
+    }
+    .replay-btn {
+        flex: 1 1 auto;
+        min-width: 0;
+        min-height: 40px;
+        font-size: 0.72rem;
+        padding: 8px 10px;
+    }
+    .replay-step-info {
+        width: 100%;
+        text-align: center;
+        margin-left: 0;
+        font-size: 0.75rem;
+    }
+
+    .challenge-picker-hero {
+        padding: 20px 14px;
+        margin-bottom: 16px;
+    }
+    .challenge-picker-hero h2 { font-size: 1.5rem; }
+    .challenge-picker-hero p { font-size: 0.88rem; margin-bottom: 14px; }
+    .challenge-picker-stats { gap: 8px; }
+    .picker-stat {
+        padding: 6px 12px;
+        font-size: 0.78rem;
+    }
+    .level-list {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    .level-card { padding: 14px; }
+    .level-card-play { min-height: 44px; }
+
+    .challenge-nav { gap: 6px; }
+    .nav-btn { min-height: 44px; font-size: 0.78rem; }
+
+    .editor-toolbar {
+        padding: 8px;
+        gap: 6px;
+    }
+    .tool-btn {
+        flex: 1 1 calc(50% - 6px);
+        justify-content: center;
+        min-height: 44px;
+        font-size: 0.75rem;
+        padding: 8px 10px;
+    }
+    .editor-actions { width: 100%; }
+    .editor-action-btn {
+        flex: 1;
+        min-height: 44px;
+        text-align: center;
+        padding: 10px 12px;
+        font-size: 0.8rem;
+    }
+
+    .modal {
+        padding: 24px 18px;
+        border-radius: 18px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    .modal-emoji { font-size: 3rem; }
+    .modal-title { font-size: 1.4rem; }
+    .modal-text { font-size: 0.88rem; }
+    .modal-btn {
+        min-height: 44px;
+        padding: 10px 18px;
+        font-size: 0.88rem;
+        flex: 1 1 100%;
+    }
+    .modal-btns { flex-direction: column; width: 100%; }
+
+    .io-row { flex-direction: column; }
+    .io-btn { min-height: 44px; }
 }

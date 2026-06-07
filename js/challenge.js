@@ -348,4 +348,9 @@
         loadLevel(idx);
         showChallengeGame();
     };
+
+    document.addEventListener('beebot:resize', () => {
+        if (!gameEl.classList.contains('active')) return;
+        renderer.placeBee(beeState);
+    });
 })();
