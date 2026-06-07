@@ -6,6 +6,10 @@ Virtual BeeBot é um jogo educativo para o navegador que ensina lógica de progr
 
 Inspirado nas aulas da Mind Maker da minha filha Lucia, no Colégio Santa Catarina.
 
+## Jogue
+
+https://cesarscur.github.io/LuciaBeeBot/
+
 ## Recursos
 
 - **Livre** — Explore o tabuleiro livremente, com marcadores e controles de replay
@@ -29,3 +33,8 @@ Depois, acesse [http://localhost:8000](http://localhost:8000).
 ## Tecnologias
 
 HTML, CSS e JavaScript puros — sem compilação e sem dependências.
+
+
+## Colabore
+
+Se tiver sugestões de melhoria crie uma [Issue](https://github.com/CesarScur/LuciaBeeBot/issues/new) ou abra uma [PR](https://github.com/CesarScur/LuciaBeeBot/compare) com a sua contribuição.
